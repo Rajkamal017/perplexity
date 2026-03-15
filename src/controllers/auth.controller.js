@@ -136,6 +136,13 @@ export async function getMe(req, res) {
 
 }
 
+
+/**
+ * @route GET /api/auth/verify-email
+ * @desc Verify user's email address
+ * @access Public
+ * @query { token }
+ */
 export async function verifyEmail(req, res) {
     const { token } = req.query;
 

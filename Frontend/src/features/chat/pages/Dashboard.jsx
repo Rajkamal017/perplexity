@@ -15,6 +15,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     chat.initializeSocketConnection()
+    chat.handleGetChats()
   }, [])
 
   const handleSubmitMessage = (event) => {
@@ -29,20 +30,25 @@ export const Dashboard = () => {
     setChatInput('')
   }
 
+  const openChat = (chatId) => {
+    chat.handleOpenChat(chatId)
+  }
+
   return (
-    <><div>Dashboard</div><main className='min-h-screen w-full bg-[#07090f] p-3 text-white md:p-5'>
+    <main className='min-h-screen w-full bg-[#07090f] p-3 text-white md:p-5'>
       <section className='mx-auto flex h-[calc(100vh-1.5rem)] w-full gap-4 rounded-3xl border   p-1 md:h-[calc(100vh-2.5rem)] md:gap-6 md:p-1 border-none'>
         <aside className='hidden h-full w-72 shrink-0 rounded-3xl border  bg-[#080b12] p-4 md:flex md:flex-col'>
           <h1 className='mb-5 text-3xl font-semibold tracking-tight'>Perplexity</h1>
 
           <div className='space-y-2'>
-            {Array.from({ length: 6 }).map((_, index) => (
+            {Object.values(chats).map((chat,index) => (
               <button
+                onClick={()=> {openChat(chat.id)}}
                 key={index}
                 type='button'
-                className='w-full rounded-xl border border-white/60 bg-transparent px-3 py-2 text-left text-base font-medium text-white/90 transition hover:border-white hover:text-white'
+                className='w-full rounded-xl cursor-pointer border border-white/60 bg-transparent px-3 py-2 text-left text-base font-medium text-white/90 transition hover:border-white hover:text-white'
               >
-                Chat title
+                {chat.title}
               </button>
             ))}
           </div>
@@ -82,6 +88,6 @@ export const Dashboard = () => {
           </footer>
         </section>
       </section>
-    </main></>
+    </main>
   )
 }
